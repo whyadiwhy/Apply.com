@@ -1,4 +1,5 @@
 using Apply.com.Data;
+using Apply.com.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>()
+builder.Services.AddIdentity<User, IdentityRole>(options => options.Password = new PasswordOptions
+{
+    RequireDigit = true,
+    RequiredLength = 6,
+    RequireLowercase = false,
+    RequireUppercase = false,
+    RequireNonAlphanumeric = false,
+})
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = new PathString("/Account/Login");
+    options.LoginPath = new PathString("/Account/Login");
+    options.SlidingExpiration = true; //resets the expiration time if a request is made and more than half of the timeout interval has elapsed
+});
+builder.Services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

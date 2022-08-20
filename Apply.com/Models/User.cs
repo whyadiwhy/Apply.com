@@ -10,6 +10,6 @@ namespace Apply.com.Models
         [MaxLength(60)]
         public string LastName { get; set; }
         [MaxLength(10)]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
     }
 }
