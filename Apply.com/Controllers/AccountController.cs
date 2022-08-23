@@ -37,10 +37,9 @@ namespace Apply.com.Controllers
         [Route("employer/register")]
         public async Task<IActionResult> EmployerRegister(
             [Bind("FirstName", "LastName", "Email", "Password", "ConfirmPassword")]
-            EmployerRegisterViewModel model, IFormFile image)
+            EmployerRegisterViewModel model)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
 
                 var user = new User
                 {
@@ -49,20 +48,6 @@ namespace Apply.com.Controllers
                     LastName = model.LastName,
                     Email = model.Email  
                 };
-
-                string wwwRootPath = _hostEnvironment.WebRootPath; //gets the location of wwwroot folder
-                if (image != null) {
-                    string fileName = image.FileName;
-                    var uploads = Path.Combine(wwwRootPath, @"img/EmployerProfile");
-                    var extension = Path.GetExtension(image.FileName);
-
-                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
-                        image.CopyTo(fileStreams);
-                    }
-                    user.imageURL = fileName;
-
-                }
-                _logger.LogInformation(model.imageURL);
                 var result = await _userManager.CreateAsync(user, model.Password);
                 //IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole("Employee"));
 
@@ -84,11 +69,8 @@ namespace Apply.com.Controllers
 
                    
                     return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
+                } else {
+                    foreach (var error in result.Errors) {
                         ModelState.AddModelError("", error.Description);
                     }
                 }
@@ -106,31 +88,17 @@ namespace Apply.com.Controllers
         [Route("employee/register")]
         public async Task<IActionResult> EmployeeRegister(
             [Bind("FirstName", "LastName", "Email", "Password", "ConfirmPassword")]
-            EmployeeRegisterViewModel model,IFormFile resume)
+            EmployeeRegisterViewModel model)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var user = new User
                 {
                     UserName = model.FirstName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
-                    imageURL=model.ResumeURL
                 };
-                string wwwRootPath = _hostEnvironment.WebRootPath; //gets the location of wwwroot folder
-                if (resume != null) {
-                    string fileName = resume.FileName;
-                    var uploads = Path.Combine(wwwRootPath, @"resume");
-                    var extension = Path.GetExtension(resume.FileName);
-
-                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
-                        resume.CopyTo(fileStreams);
-                    }
-                    user.imageURL = fileName;
-
-                }
-                _logger.LogInformation(model.ResumeURL);
                 var result = await _userManager.CreateAsync(user, model.Password);
                 //IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole("Employee"));
 
@@ -154,11 +122,11 @@ namespace Apply.com.Controllers
                     return RedirectToAction("Login", "Account");
                 }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
+            //    foreach (var error in result.Errors)
+            //    {
+            //        ModelState.AddModelError("", error.Description);
+            //    }
+            //}
 
             return View();
         }

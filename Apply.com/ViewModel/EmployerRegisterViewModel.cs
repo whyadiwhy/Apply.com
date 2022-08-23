@@ -16,9 +16,9 @@ namespace Apply.com.ViewModel
         public string Email { get; set; }
 
         [NotMapped]
-        public IFormFile imageFile { get; set; }
+        public IFormFile? imageFile { get; set; }
         [Display(Name = "Employer Image")]
-        public string imageURL { get; set; }
+        public string? imageURL { get; set; }
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }

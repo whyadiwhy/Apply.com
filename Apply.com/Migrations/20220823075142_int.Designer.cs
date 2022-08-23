@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Apply.com.Data.Migrations
+namespace Apply.com.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220822232337_init")]
-    partial class init
+    [Migration("20220823075142_int")]
+    partial class @int
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,6 +57,10 @@ namespace Apply.com.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyDescription")
                         .IsRequired()
@@ -173,7 +177,9 @@ namespace Apply.com.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("imageURL")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("resumeURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
