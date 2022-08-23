@@ -11,7 +11,7 @@
 
         <form asp-controller="Account" asp-action="UpdateProfile" method="post">
 
-            @Html.ValidationSummary()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.AntiForgeryToken()
             <div class="form-group">
                 @Html.LabelFor(c => c.FirstName, "First Name")

@@ -4,7 +4,7 @@
 
 namespace Apply.com.Data.Migrations
 {
-    public partial class New1 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -14,7 +14,7 @@
             our customer service center is working for you 24/7.
         </p>
         <form method="post" asp-controller="Account" asp-action="Login">
-            @Html.ValidationSummary()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
             <div class="form-group">
                 @Html.LabelFor(c => c.Email, "Email")

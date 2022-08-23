@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\" />
+    <Folder Include="wwwroot\img\EmployerProfile\" />
+    <Folder Include="wwwroot\resume\" />
   </ItemGroup>
 
 </Project>

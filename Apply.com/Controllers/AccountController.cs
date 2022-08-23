@@ -14,15 +14,18 @@ namespace Apply.com.Controllers
         private RoleManager<IdentityRole> _roleManager;
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
+        public IWebHostEnvironment _hostEnvironment;
 
         public AccountController(UserManager<User> userManager,
-            SignInManager<User> signManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, ILogger<AccountController> logger)
-        {
+            SignInManager<User> signManager, RoleManager<IdentityRole> roleManager, 
+            ApplicationDbContext context, ILogger<AccountController> logger,
+            IWebHostEnvironment hostEnvironment) {
             _userManager = userManager;
             _signManager = signManager;
             _roleManager = roleManager;
             _context = context;
             _logger = logger;
+            _hostEnvironment = hostEnvironment;
         }
         [HttpGet]
         [Route("employer/register")]
@@ -34,17 +37,32 @@ namespace Apply.com.Controllers
         [Route("employer/register")]
         public async Task<IActionResult> EmployerRegister(
             [Bind("FirstName", "LastName", "Email", "Password", "ConfirmPassword")]
-            EmployerRegisterViewModel model)
+            EmployerRegisterViewModel model, IFormFile image)
         {
             if (ModelState.IsValid)
             {
+
                 var user = new User
                 {
                     UserName = model.FirstName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Email = model.Email
+                    Email = model.Email  
                 };
+
+                string wwwRootPath = _hostEnvironment.WebRootPath; //gets the location of wwwroot folder
+                if (image != null) {
+                    string fileName = image.FileName;
+                    var uploads = Path.Combine(wwwRootPath, @"img/EmployerProfile");
+                    var extension = Path.GetExtension(image.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
+                        image.CopyTo(fileStreams);
+                    }
+                    user.imageURL = fileName;
+
+                }
+                _logger.LogInformation(model.imageURL);
                 var result = await _userManager.CreateAsync(user, model.Password);
                 //IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole("Employee"));
 
@@ -64,7 +82,7 @@ namespace Apply.com.Controllers
                         await _userManager.AddToRoleAsync(user, "Employer");
                     }
 
-                    //await _signManager.SignInAsync(user, false);
+                   
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -88,7 +106,7 @@ namespace Apply.com.Controllers
         [Route("employee/register")]
         public async Task<IActionResult> EmployeeRegister(
             [Bind("FirstName", "LastName", "Email", "Password", "ConfirmPassword")]
-            EmployeeRegisterViewModel model)
+            EmployeeRegisterViewModel model,IFormFile resume)
         {
             if (ModelState.IsValid)
             {
@@ -97,8 +115,22 @@ namespace Apply.com.Controllers
                     UserName = model.FirstName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Email = model.Email
+                    Email = model.Email,
+                    imageURL=model.ResumeURL
                 };
+                string wwwRootPath = _hostEnvironment.WebRootPath; //gets the location of wwwroot folder
+                if (resume != null) {
+                    string fileName = resume.FileName;
+                    var uploads = Path.Combine(wwwRootPath, @"resume");
+                    var extension = Path.GetExtension(resume.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
+                        resume.CopyTo(fileStreams);
+                    }
+                    user.imageURL = fileName;
+
+                }
+                _logger.LogInformation(model.ResumeURL);
                 var result = await _userManager.CreateAsync(user, model.Password);
                 //IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole("Employee"));
 
@@ -191,7 +223,6 @@ namespace Apply.com.Controllers
         [Route("employee/update-profile")]
         public async Task<IActionResult> UpdateProfile([FromForm] User model)
         {
-            //            _logger.LogError(model.Gender.ToString());
             var user = await _userManager.GetUserAsync(HttpContext.User);
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
