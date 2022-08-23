@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Apply.com.ViewModel
 {
@@ -13,6 +14,9 @@ namespace Apply.com.ViewModel
         [Required, MaxLength(60), Display(Name = "Email", Prompt = "Email")]
         [EmailAddress]
         public string Email { get; set; }
+        public IFormFile ResumeFile { get; set; }
+        [Display(Name = "Resume URL")]
+        public string ResumeURL { get; set; }
 
         [Required, DataType(DataType.Password), Display(Name = "Password", Prompt = "Password")]
         public string Password { get; set; }

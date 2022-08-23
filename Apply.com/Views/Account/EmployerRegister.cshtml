@@ -14,10 +14,11 @@
             If you have any questions, please feel free to <a href="#">contact us</a>,
             our customer service center is working for you 24/7.
         </p>
-        <form method="post" asp-controller="Account" asp-action="EmployerRegister">
+        <form method="post" asp-controller="Account" asp-action="EmployerRegister" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly"></div>
-            @Html.ValidationSummary()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
+            @*add field for image*@
             <div class="form-group">
                 @Html.LabelFor(c => c.FirstName, "Company Name")
                 @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Company Name" })

@@ -3,6 +3,7 @@ using Apply.com.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
 
 namespace Apply.com.Controllers
 {
@@ -22,6 +23,7 @@ namespace Apply.com.Controllers
         public IActionResult Index()
         {
             var jobs = _context.Jobs.ToList();
+
             return View(jobs);
         }
         [Route("jobs/create")]
@@ -35,7 +37,7 @@ namespace Apply.com.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(Job model)
         {
-            if (ModelState.IsValid == false)
+            if (!ModelState.IsValid)
             {
                 TempData["type"] = "success";
                 TempData["message"] = "Job posted successfully";
@@ -48,7 +50,8 @@ namespace Apply.com.Controllers
 
                 return RedirectToActionPermanent("Index", "Home");
             }
-
+            var user2 = await _userManager.GetUserAsync(HttpContext.User);
+            model.companyImgURL = user2.imageURL;
             return View("Create", model);
         }
         [HttpPost]
@@ -75,6 +78,20 @@ namespace Apply.com.Controllers
                 CreatedAt = DateTime.Now
             };
             _context.Applicants.Add(apply);
+            MailMessage mail = new MailMessage();
+            mail.To.Add(user.Email);
+            mail.From = new MailAddress("aniket.sharma@globallogic.com");
+            mail.Body = "Hello friends, testing karlo";
+            mail.Subject = "This is a testing mail";
+            //An SMTP (Simple Mail Transfer Protocol) server is an application that's primary
+            //purpose is to send,receive, and/or relay outgoing mail between email senders and receivers.
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new System.Net.NetworkCredential("aniket.sharma@globallogic.com", "P@ssword@68"); // Enter seders User name and password       
+            smtp.EnableSsl = true;
+            smtp.Send(mail);
 
             await _context.SaveChangesAsync();
 

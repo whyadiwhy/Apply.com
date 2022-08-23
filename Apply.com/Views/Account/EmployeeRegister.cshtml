@@ -13,10 +13,12 @@
             If you have any questions, please feel free to <a href="#">contact us</a>,
             our customer service center is working for you 24/7.
         </p>
-        <form method="post" asp-controller="Account" asp-action="EmployeeRegister">
+        <form method="post" asp-controller="Account" asp-action="EmployeeRegister" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly"></div>
             @Html.ValidationSummary()
 
+
+            @*add flied for image here*@
             <div class="form-group">
                 @Html.LabelFor(c => c.FirstName)
                 @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control"})
