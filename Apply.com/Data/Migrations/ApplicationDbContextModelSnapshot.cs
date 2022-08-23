@@ -56,6 +56,10 @@ namespace Apply.com.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CompanyDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -171,7 +175,9 @@ namespace Apply.com.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("imageURL")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("resumeURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

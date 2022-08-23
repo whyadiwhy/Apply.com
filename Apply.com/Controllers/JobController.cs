@@ -12,12 +12,13 @@ namespace Apply.com.Controllers
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
         private UserManager<User> _userManager; //to manage users e.g. registering new users, validating credentials and loading user information. 
+        public IWebHostEnvironment _hostEnvironment;
 
-        public JobController(ApplicationDbContext context, UserManager<User> userManager, ILogger<JobController> logger)
-        {
+        public JobController(ApplicationDbContext context, UserManager<User> userManager, ILogger<JobController> logger, IWebHostEnvironment hostEnvironment) {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _hostEnvironment = hostEnvironment;
         }
         [Route("jobs")]
         public IActionResult Index()
@@ -35,23 +36,48 @@ namespace Apply.com.Controllers
         [Route("jobs/save")]
         [Authorize(Roles = "Employer")]
         [HttpPost]
-        public async Task<IActionResult> Save(Job model)
+        public async Task<IActionResult> Save(Job model,IFormFile resume,IFormFile image)
         {
-            if (!ModelState.IsValid)
+            string wwwRootPath = _hostEnvironment.WebRootPath; //gets the location of wwwroot folder
+            if (ModelState.IsValid)
             {
                 TempData["type"] = "success";
                 TempData["message"] = "Job posted successfully";
                 //_logger.LogInformation(model.ToString());
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 model.User = user;
-                _context.Jobs.Add(model);
+                model.companyImgURL = user.imageURL;
 
+                if (resume != null) {
+                    string fileName = resume.FileName;
+                    var uploads = Path.Combine(wwwRootPath, @"resume");
+                    var extension = Path.GetExtension(resume.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
+                        resume.CopyTo(fileStreams);
+                    }
+                    user.resumeURL = fileName;
+                }
+                if (image != null) {
+                    string fileName = image.FileName;
+                    var uploads = Path.Combine(wwwRootPath, @"img/EmployerProfile");
+                    var extension = Path.GetExtension(image.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
+                        image.CopyTo(fileStreams);
+                    }
+                    user.imageURL = fileName;
+
+                }
+                _context.Jobs.Add(model);
                 await _context.SaveChangesAsync();
 
                 return RedirectToActionPermanent("Index", "Home");
             }
             var user2 = await _userManager.GetUserAsync(HttpContext.User);
-            model.companyImgURL = user2.imageURL;
+           
+            
+            
             return View("Create", model);
         }
         [HttpPost]
@@ -71,6 +97,7 @@ namespace Apply.com.Controllers
                     return RedirectToActionPermanent("JobDetails", "Home", new { id });
                 }
             }
+
             var apply = new Applicant
             {
                 User = user,
