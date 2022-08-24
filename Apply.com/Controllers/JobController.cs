@@ -101,20 +101,20 @@ namespace Apply.com.Controllers
                 CreatedAt = DateTime.Now
             };
             _context.Applicants.Add(apply);
-            MailMessage mail = new MailMessage();
-            mail.To.Add(user.Email);
-            mail.From = new MailAddress("aniket.sharma@globallogic.com");
-            mail.Body = "Hello friends, testing karlo";
-            mail.Subject = "This is a testing mail";
-            //An SMTP (Simple Mail Transfer Protocol) server is an application that's primary
-            //purpose is to send,receive, and/or relay outgoing mail between email senders and receivers.
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new System.Net.NetworkCredential("aniket.sharma@globallogic.com", "P@ssword@68"); // Enter seders User name and password       
-            smtp.EnableSsl = true;
-            smtp.Send(mail);
+            //MailMessage mail = new MailMessage();
+            //mail.To.Add(user.Email);
+            //mail.From = new MailAddress("aniket.sharma@globallogic.com");
+            //mail.Body = "Hello friends, testing karlo";
+            //mail.Subject = "This is a testing mail";
+            ////An SMTP (Simple Mail Transfer Protocol) server is an application that's primary
+            ////purpose is to send,receive, and/or relay outgoing mail between email senders and receivers.
+            //SmtpClient smtp = new SmtpClient();
+            //smtp.Host = "smtp.gmail.com";
+            //smtp.Port = 587;
+            //smtp.UseDefaultCredentials = false;
+            //smtp.Credentials = new System.Net.NetworkCredential("aniket.sharma@globallogic.com", "P@ssword@68"); // Enter seders User name and password       
+            //smtp.EnableSsl = true;
+            //smtp.Send(mail);
 
             await _context.SaveChangesAsync();
 
@@ -138,14 +138,12 @@ namespace Apply.com.Controllers
         public async Task<IActionResult> Destroy(int id)
         {
             var job = _context.Jobs.SingleOrDefault(x => x.Id == id);
-            var jobA = _context.Applicants.SingleOrDefault(x => x.Id == id);
+            var jobApp = _context.Applicants.SingleOrDefault(x => x.Id == id);
             if (job == null)
             {
                 return NotFound();
             }
-
             _context.Jobs.Remove(job);
-            _context.Applicants.Remove(jobA);
             await _context.SaveChangesAsync();
 
             TempData["type"] = "success";

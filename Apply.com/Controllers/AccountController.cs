@@ -128,11 +128,11 @@ namespace Apply.com.Controllers
         }
         [HttpGet]
         [Route("login")]
-        public IActionResult Login(string returnUrl = "")
+        public IActionResult Login(/*string returnUrl = ""*/)
         {
            
-            var model = new LoginViewModel { ReturnUrl = returnUrl };
-            return View(model);
+            //var model = new LoginViewModel { ReturnUrl = returnUrl };
+            return View(/*model*/);
         }
         [HttpPost]
         [Route("login")]
@@ -156,10 +156,10 @@ namespace Apply.com.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
+                    //if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    //{
+                    //    return Redirect(model.ReturnUrl);
+                    //}
 
                     return RedirectToAction("Index", "Home");
                 }
