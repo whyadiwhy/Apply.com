@@ -36,31 +36,22 @@ namespace Apply.com.Controllers
         [Route("jobs/save")]
         [Authorize(Roles = "Employer")]
         [HttpPost]
-        public async Task<IActionResult> Save(Job model,IFormFile resume,IFormFile image)
+        public async Task<IActionResult> Save(Job model,IFormFile image)
         {
             string wwwRootPath = _hostEnvironment.WebRootPath; //gets the location of wwwroot folder
             if (ModelState.IsValid)
             {
                 TempData["type"] = "success";
                 TempData["message"] = "Job posted successfully";
-                //_logger.LogInformation(model.ToString());
+
+                _logger.LogInformation("Job/save: {@model}",model);
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 model.User = user;
-                model.companyImgURL = user.imageURL;
+                
 
-                if (resume != null) {
-                    string fileName = resume.FileName;
-                    var uploads = Path.Combine(wwwRootPath, @"resume");
-                    var extension = Path.GetExtension(resume.FileName);
-
-                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
-                        resume.CopyTo(fileStreams);
-                    }
-                    user.resumeURL = fileName;
-                }
                 if (image != null) {
                     string fileName = image.FileName;
-                    var uploads = Path.Combine(wwwRootPath, @"img/EmployerProfile");
+                    var uploads = Path.Combine(wwwRootPath, @"img/EmployerLogo");
                     var extension = Path.GetExtension(image.FileName);
 
                     using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
@@ -69,8 +60,13 @@ namespace Apply.com.Controllers
                     user.imageURL = fileName;
 
                 }
+                model.companyImgURL = user.imageURL;
                 _context.Jobs.Add(model);
                 await _context.SaveChangesAsync();
+
+                for (int i = 0; i < _context.Jobs.Count();i++) {
+
+                    _logger.LogInformation("image URL in while create=ing JOB: " + _context.Jobs.ToList()[i].companyImgURL); }
 
                 return RedirectToActionPermanent("Index", "Home");
             }

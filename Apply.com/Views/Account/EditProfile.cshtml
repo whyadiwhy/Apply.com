@@ -9,7 +9,7 @@
     <div class="box">
         <h3 class="heading">Edit Profile</h3>
 
-        <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+        <form asp-controller="Account" asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
 
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.AntiForgeryToken()
@@ -37,13 +37,39 @@
                     @Html.LabelFor(x => x.Gender, "Female", new { @class = "form-check-label"})
                 </div>
             </div>
-
+            <div>
+                
+                    <label asp-for="resumeURL" class="text-light">Upload Resume</label>
+                    <input asp-for="resumeURL" class="form-control" id="uploadBox" name="resume" type="file" />
+               
+            </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-white-primary">
+                <button type="submit" class="btn btn-outline-white-primary" onclick="return ValidateInput()">
                     <i class="fa fa-signing"></i> Update
                 </button>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please upload an Resume!'
+
+                });
+                return false;
+            }
+            return true
+        }
+    </script>
+}

@@ -38,11 +38,11 @@ namespace Apply.com.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool Filled { get; set; } = false;
 
-        public User User { get; set; }
+        public User? User { get; set; }
 
-        [NotMapped]
+        
         public string? companyImgURL { get; set; }
 
-        public List<Applicant> Applicants { get; set; }
+        public List<Applicant>? Applicants { get; set; }
     }
 }

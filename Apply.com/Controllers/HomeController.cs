@@ -34,12 +34,19 @@ namespace Apply.com.Controllers
                 Trendings = trendings,
                 Jobs = jobs
             };
+            for(int i = 0; i < jobs.Count; i++) {
+                _logger.LogInformation("jobs in index of home: {value}", jobs[i]);
+            }
+            for (int i = 0; i < trendings.Count; i++) {
+                _logger.LogInformation("trending jobs in index of home: {@value}", trendings[i].ToString());
+            }
             return View(model);
         }
+        
         [Route("jobs/{id}/details")]
         public async Task<IActionResult> JobDetails(int id)
         {
-            //ViewBag.message = "You can't do this action";
+           
             var job = _context.Jobs.SingleOrDefault(x => x.Id == id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var applied = false;

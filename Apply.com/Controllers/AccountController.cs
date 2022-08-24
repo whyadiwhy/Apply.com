@@ -39,6 +39,7 @@ namespace Apply.com.Controllers
             [Bind("FirstName", "LastName", "Email", "Password", "ConfirmPassword")]
             EmployerRegisterViewModel model)
         {
+            _logger.LogInformation("Employer registration: " + Convert.ToString(model));
             if (ModelState.IsValid) {
 
                 var user = new User
@@ -49,8 +50,6 @@ namespace Apply.com.Controllers
                     Email = model.Email  
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                //IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole("Employee"));
-
                 if (result.Succeeded)
                 {
                     bool checkRole = await _roleManager.RoleExistsAsync("Employer");
@@ -90,18 +89,16 @@ namespace Apply.com.Controllers
             [Bind("FirstName", "LastName", "Email", "Password", "ConfirmPassword")]
             EmployeeRegisterViewModel model)
         {
-            //if (ModelState.IsValid)
-            //{
+            _logger.LogInformation("Employee registration: "+ Convert.ToString(model));
+            if (ModelState.IsValid) {
                 var user = new User
                 {
-                    UserName = model.FirstName,
+                    UserName=model.FirstName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                //IdentityResult roleResult = await _roleManager.CreateAsync(new IdentityRole("Employee"));
-
                 if (result.Succeeded)
                 {
                     bool checkRole = await _roleManager.RoleExistsAsync("Employee");
@@ -122,11 +119,10 @@ namespace Apply.com.Controllers
                     return RedirectToAction("Login", "Account");
                 }
 
-            //    foreach (var error in result.Errors)
-            //    {
-            //        ModelState.AddModelError("", error.Description);
-            //    }
-            //}
+                foreach (var error in result.Errors) {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
 
             return View();
         }
@@ -134,6 +130,7 @@ namespace Apply.com.Controllers
         [Route("login")]
         public IActionResult Login(string returnUrl = "")
         {
+           
             var model = new LoginViewModel { ReturnUrl = returnUrl };
             return View(model);
         }
@@ -141,6 +138,7 @@ namespace Apply.com.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            _logger.LogInformation("Login model values: " + Convert.ToString(model));
             if (ModelState.IsValid == false)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
@@ -186,16 +184,27 @@ namespace Apply.com.Controllers
 
             return View(user);
         }
+
         [Authorize(Roles = "Employee")]
         [HttpPost]
         [Route("employee/update-profile")]
-        public async Task<IActionResult> UpdateProfile([FromForm] User model)
-        {
+        public async Task<IActionResult> UpdateProfile([FromForm] User model,IFormFile resume) {
+            _logger.LogInformation("UpdateProfile values: " + model.ToString());
+            string wwwRootPath = _hostEnvironment.WebRootPath; //gets the location of wwwroot folder
             var user = await _userManager.GetUserAsync(HttpContext.User);
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Gender = model.Gender;
+            if (resume != null) {
+                string fileName = resume.FileName;
+                var uploads = Path.Combine(wwwRootPath, @"resume");
+                var extension = Path.GetExtension(resume.FileName);
 
+                using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create)) {
+                    resume.CopyTo(fileStreams);
+                }
+                user.resumeURL = fileName;
+            }
             _context.Users.Update(user);
 
             await _context.SaveChangesAsync();
