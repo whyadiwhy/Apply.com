@@ -4,6 +4,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:59028",
+      "ServiceUrl": "http://localhost:2565/api/contact",
       "sslPort": 44389
     }
   },
@@ -14,6 +15,7 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7269;http://localhost:5269",
       "environmentVariables": {
+        "ServiceUrl": "http://localhost:2565/api/contact",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
@@ -21,6 +23,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
+        "ServiceUrl": "http://localhost:2565/api/contact",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }

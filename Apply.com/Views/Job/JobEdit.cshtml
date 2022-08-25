@@ -1,0 +1,91 @@
+﻿@model Apply.com.Models.Job
+
+@{
+    ViewData["Title"] = "JobEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>JobEdit</h1>
+
+<h4>Job</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="JobEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <select id="type" name="Type" placeholder="Choose job type"
+                        class="form-control select2">
+                    <option value="Full time">Full time</option>
+                    <option value="Part time">Part time</option>
+                    <option value="Internship">Internship</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select id="category" name="category" placeholder="Choose category"
+                        class="form-control select2">
+                    <option value="web-design">Web design</option>
+                    <option value="graphic-design">Graphic design</option>
+                    <option value="web-development">Web development</option>
+                    <option value="human-resource">Human Resources</option>
+                    <option value="support">Support</option>
+                    <option value="android">Android</option>
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastDate" class="control-label"></label>
+                <input asp-for="LastDate" class="form-control" />
+                <span asp-validation-for="LastDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyDescription" class="control-label"></label>
+                <input asp-for="CompanyDescription" class="form-control" />
+                <span asp-validation-for="CompanyDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Website" class="control-label"></label>
+                <input asp-for="Website" class="form-control" />
+                <span asp-validation-for="Website" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="companyImgURL" class="text-light">Select Company Logo:</label>
+                <input asp-for="companyImgURL" class="form-control" id="uploadBox" name="image" type="file" />
+                <span asp-validation-for="companyImgURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Dashboard" asp-action="Index">Back to List</a>
+</div>
+

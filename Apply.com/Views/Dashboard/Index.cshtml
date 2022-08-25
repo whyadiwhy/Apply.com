@@ -66,10 +66,11 @@
                                         </a>
                                     </td>
                                     <td>
-                                        @*<a href="#" class="btn btn-outline-white-secondary">
-                                            <i class="fa fa-edit"></i>Edit
+                                        <a asp-controller="Job" asp-action="JobEdit" asp-route-id="@job.Id" class=" btn btn-primary btn-sm">
+                                            <i class="bi bi-pencil-square"></i>
+                                            Edit
                                         </a>
-                                        <br>*@
+                                        <br>
                                         @if (job.Filled)
                                         {
                                             <a href="#"

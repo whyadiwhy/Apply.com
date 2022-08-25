@@ -41,7 +41,7 @@
                             <a asp-controller="Home" asp-action="Privacy" class="nav-link text-light">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="Home" asp-action="Contact" class="nav-link text-light">Contact</a>
+                            <a asp-controller="Contact" asp-action="Create" class="nav-link text-light">Contact</a>
                         </li>
                         @if (this.User.IsInRole("Employer") && SignInManager.IsSignedIn(User))
                         {

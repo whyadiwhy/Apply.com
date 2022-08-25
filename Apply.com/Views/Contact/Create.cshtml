@@ -1,0 +1,54 @@
+﻿@model Apply.com.Models.Contact
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/style.default.css" id="theme-stylesheet">
+<link rel="stylesheet" href="~/css/custom.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<!------ Include the above in your HEAD tag ---------->
+
+@Html.ValidationSummary()
+
+<form method="post" asp-action="Create">
+<div class="container contact" style=" margin-top:50px;">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="contact-info">
+                <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image" />
+                <h2 class="text-light">Contact Us</h2>
+                <h4 class="text-light">We would love to hear from you !</h4>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="contact-form">
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Comment" class="control-label"></label>
+                        <input asp-for="Comment" class="form-control" />
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="width:150px">Send</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>

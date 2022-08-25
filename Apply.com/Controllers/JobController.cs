@@ -151,5 +151,54 @@ namespace Apply.com.Controllers
 
             return RedirectToActionPermanent("Index", "Dashboard");
         }
+        [HttpGet]
+        [Authorize(Roles = "Employer")]
+        //[Route("employer/jobs/{id}/edit")]
+        public IActionResult JobEdit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var job = _context.Jobs.FirstOrDefault(c => c.Id == id);
+            if (job == null)
+            {
+                return NotFound();
+            }
+            return View(job);
+        }
+
+        //Post
+
+        [HttpPost]
+        [Authorize(Roles = "Employer")]
+        //[Route("employer/jobs/jobEdit")]
+        public async Task<IActionResult> JobEdit(Job job, IFormFile image)
+        {
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (ModelState.IsValid)
+            {
+                if (image != null)
+                {
+                    string fileName = image.FileName;
+                    var uploads = Path.Combine(wwwRootPath, @"img/EmployerLogo");
+                    var extension = Path.GetExtension(image.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        image.CopyTo(fileStreams);
+                    }
+                    user.imageURL = fileName;
+
+                }
+                job.companyImgURL = user.imageURL;
+                _context.Update(job);
+                _context.SaveChanges();
+                TempData["success"] = "job updated successfully";
+                return RedirectToAction("Index", "Dashboard");
+            }
+            return View(job);
+        }
     }
 }
