@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="~/css/owl.carousel.min.css">
 <link rel="stylesheet" href="~/css/animate.css">
 <link rel="stylesheet" href="~/css/site.css">
+<link rel="stylesheet" href="~/css/myslider.css">
 <style>
     .job__title {
         margin-top: 0
@@ -29,8 +30,12 @@
         border-left: solid 5px #918f8e;
         padding-left: 15px
     }
+     .job-listing:is(:hover) {
+     background-color:#fbf7ff
+     }
 
     .job-listing {
+        background-color:white;
         border: solid 1px #dee2e6;
         border-bottom: none;
         padding-top: 30px;
@@ -62,6 +67,14 @@
         background: center center url("../img/2923139.jpg") no-repeat;
         background-size: cover
     }
+    .box-image-text{
+          transition: transform .2s;
+    }
+    .box-image-text:is(:hover){
+        transform: scale(1.05);
+        background-color:#fbf7ff;
+    }
+   
 </style>
 <section style="margin-top:-65px;">
  <div class="site-blocks-cover">
@@ -83,11 +96,11 @@
           <div class="col-md-6 ml-auto align-self-center">
             <div class="intro">
               <div class="heading">
-                <h2 class="text-white font-weight-bold">Need <br />Job?</h2>
+                <h2 class="text-black font-weight-bold">Need <br />Job?</h2>
               </div>
               <div class="text sub-text">
                 <p>Finding the right job made easy with Apply.com. Register Now and Apply to the best jobs!.</p>
-                <p><a href="#" target="_blank" class="btn btn-outline-primary btn-md btn-pill">Contact Us</a></p>
+                <p><a href="#" target="_blank" class="btn btn-primary btn-md btn-pill">Contact Us</a></p>
               </div>
             </div>
           </div>
@@ -144,17 +157,15 @@
             @foreach (var job in Model.Jobs)
             {
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <div class="box-image-text bg-visible full-height">
+                    <div class="box-image-text  full-height">
                         <div class="top">
-                            <a href="#">
-                                <div class="image">
-                                    <img src="~/img/featured1.jpg" alt="" class="img-fluid">
+                            
+                               
+                                
+                                <div>
+                                    <img src="~/img/EmployerLogo/@job.companyImgURL" alt="@job.CompanyName" style="max-width: 150px;padding: 20px 0px 20px 0px; height:150px;">
                                 </div>
-                                <div class="bg"></div>
-                                <div class="logo">
-                                    <img src="~/img/EmployerLogo/@job.companyImgURL" alt="@job.CompanyName" style="max-width: 80px;">
-                                </div>
-                            </a>
+                            
                         </div>
                         <div class="content">
                             <h5><a asp-controller="Home" asp-action="JobDetails" asp-route-id="@job.Id">@job.Title</a></h5>
@@ -184,10 +195,10 @@
 </section>
 <section>
     <div class="container">
-        <h4 class="heading">Trending this month</h4>
+        <h4 class="heading text-light">Trending this month</h4>
         @foreach (var trending in Model.Trendings)
         {
-            <div class="job-listing job-listing--last">
+            <div class="job-listing job-listing--last" >
                 <div class="row">
 
                     <div class="col-md-12 col-lg-6">
@@ -225,9 +236,110 @@
             </div>
         }
     </div>
+    <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="news-slider" class="owl-carousel">
+        <div class="post-slide">
+          <div class="post-img">
+            <img src="https://us.123rf.com/450wm/wolterk/wolterk1402/wolterk140200024/25656202-santa-clara-ca-usa-february-1-2014-amazon-building-in-santa-clara-california-amazon-is-an-american-i.jpg?ver=6" alt="">
+         
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">
+              <a href="#">Amazon</a>
+            </h3>
+            <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
+           
+            <a href="#" class="read-more">Visit Site</a>
+          </div>
+        </div>
+        
+        <div class="post-slide">
+          <div class="post-img">
+            <img src="https://image.architonic.com/prj2-3/5104765/microsoft-deutschland-zentrale-projects-01-titel-arcit18.jpg" alt="">
+         
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">
+              <a href="#">Microsoft</a>
+            </h3>
+            <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
+           
+            <a href="https://www.microsoft.com" class="read-more">Visit Site</a>
+          </div>
+        </div>
+        
+        <div class="post-slide">
+          <div class="post-img">
+            <img src="https://www.thenewsminute.com/sites/default/files/styles/news_detail/public/Wipro_1200_Picxy.jpg?itok=1Gmozxe3" alt="">
+         
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">
+              <a href="#">Wipro</a>
+            </h3>
+            <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
+          
+            <a href="https://www.wipro.com" class="read-more">Visit Site</a>
+          </div>
+        </div>
+        
+        <div class="post-slide">
+          <div class="post-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Flipkart-main-office.jpg" alt="">
+        
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">
+              <a href="#">Flipkart.</a>
+            </h3>
+            <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
+
+            <a href="#" class="read-more">Visit Site</a>
+          </div>
+        </div>
+        
+        <div class="post-slide">
+          <div class="post-img">
+            <img src="https://images.livemint.com/img/2020/11/11/1600x900/4ec3e248-0e36-11eb-b6f6-6ba3a0b37bef_1603013737458_1605110682845.jpg" alt="">
+          
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">
+              <a href="#">Infosys</a>
+            </h3>
+            <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
+        
+            <a href="#" class="read-more">Visit Site</a>
+          </div>
+        </div>
+
+        <div class="post-slide">
+          <div class="post-img">
+            <img src="https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2021/m10/cisco-corporate-ne-8/_jcr_content/root/hero.coreimg.jpeg/1639589219883/cisco-building-corporate-002-jpg-1889882-1-0.jpeg" alt="">
+            
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">
+              <a href="#">Cisco</a>
+            </h3>
+            <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
+    
+            <a href="#" class="read-more">Visit Site</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+   
 </section>
+
+
  <script src="~/js/bootstrap.min.js"></script>
  <script src="~/js/jquery-3.3.1.min.js"></script>
  <script src="~/js/main.js"></script>
  <script src="~/js/owl.carousel.min.js"></script>
  <script src="~/js/popper.min.js"></script>
+ <script src="~/js/myslider.js"></script>

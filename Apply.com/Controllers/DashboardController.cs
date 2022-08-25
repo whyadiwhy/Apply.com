@@ -21,6 +21,7 @@ namespace Apply.com.Controllers
             _userManager = userManager;
             _logger = logger;
         }
+        //Authorization to Employer for Dashboard
         [Route("employer/dashboard")]
         [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Index(int page = 1)
@@ -31,6 +32,7 @@ namespace Apply.com.Controllers
 
             return View(jobs);
         }
+        
         [Route("employer/applicants")]
         public async Task<IActionResult> Applicants()
         {

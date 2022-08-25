@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Areas\" />
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\img\EmployerLogo\" />
     <Folder Include="wwwroot\resume\" />
   </ItemGroup>
 

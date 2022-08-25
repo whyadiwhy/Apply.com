@@ -25,8 +25,8 @@
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                     <div class="row">
                         <div class="col-lg-12">
-                            <h4 class="text-light">Job details</h4>
-                            <p class="text-light text-small">
+                            <h4 class="text-dark">Job details</h4>
+                            <p class="text-dark text-small">
                                 Some additional info for this screen about validity of
                                 the ads, etc. Pellentesque habitant morbi tristique senectus et netus et malesuada
                                 fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget,
@@ -39,26 +39,26 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 form-group @Html.AddClassIfPropertyInError(x => x.Title, "is-invalid") ">
-                            @Html.LabelFor(c => c.Title, new { @class = "text-light"})
+                            @Html.LabelFor(c => c.Title, new { @class = "text-dark"})
                             @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
                             <span class="help-inline">@Html.ValidationMessageFor(x => x.Title)</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 form-group">
-                            @Html.LabelFor(c => c.Description, new { @class = "text-light"})
+                            @Html.LabelFor(c => c.Description, new { @class = "text-dark"})
                             @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 5 })
                             <span class="help-inline">@Html.ValidationMessageFor(x => x.Description)</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6 form-group">
-                            @Html.LabelFor(c => c.Location, new { @class = "text-light"})
+                            @Html.LabelFor(c => c.Location, new { @class = "text-dark"})
                             @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
                             <span class="help-inline">@Html.ValidationMessageFor(x => x.Location)</span>
                         </div>
                         <div class="col-lg-6 form-group">
-                            @Html.LabelFor(c => c.Type, new { @class = "text-light"})
+                            @Html.LabelFor(c => c.Type, new { @class = "text-dark"})
                             <select id="type" name="Type" placeholder="Choose job type"
                                     class="form-control select2">
                                 <option value="Full time">Full time</option>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 form-group">
-                             @Html.LabelFor(c => c.Category, new { @class = "text-light"})
+                             @Html.LabelFor(c => c.Category, new { @class = "text-dark"})
                             <select id="category" name="category" placeholder="Choose category"
                                     class="form-control select2">
                                 <option value="web-design">Web design</option>
@@ -83,13 +83,13 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-6 form-group">
-                            <label for="apply_url" class="text-light">
+                            <label for="apply_url" class="text-dark">
                                 Apply URL <span class="note">(users will apply on your website)</span>
                             </label>
                             <input id="apply_url" type="url" class="form-control">
                         </div>
                         <div class="col-xl-6 form-group">
-                            @Html.LabelFor(c => c.LastDate, "Validity of the post", new { @class = "text-light"})
+                            @Html.LabelFor(c => c.LastDate, "Validity of the post", new { @class = "text-dark"})
                             @Html.TextBoxFor(m => m.LastDate, new { @class = "form-control", @type = "date" })
                             @*<label for="validity">Validity of the post</label>
                             <input id="validity" name="last_date" type="date" class="form-control">*@
@@ -102,25 +102,25 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <h4 class="text-light">Company details</h4>
+                            <h4 class="text-dark">Company details</h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 form-group">
-                            @Html.LabelFor(c => c.CompanyName, "Company Name", new { @class = "text-light"})
+                            @Html.LabelFor(c => c.CompanyName, "Company Name", new { @class = "text-dark"})
                             @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 form-group">
-                            @Html.LabelFor(c => c.CompanyDescription, "Company Description", new { @class = "text-light"})
+                            @Html.LabelFor(c => c.CompanyDescription, "Company Description", new { @class = "text-dark"})
                             @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "form-control", rows = 3 })
                         </div>
                     </div>
                     <div class="row">
                        
                         <div class="col-lg-4  form-group">
-                            @Html.LabelFor(c => c.Website, "Company Website", new { @class = "text-light"})
+                            @Html.LabelFor(c => c.Website, "Company Website", new { @class = "text-dark"})
                             @Html.TextBoxFor(m => m.Website, new { @class = "form-control", @type = "url" })
                         </div>
                         
@@ -128,7 +128,7 @@
                     </div>
                      <div>
                             
-                                <label asp-for="companyImgURL" class="text-light">Select Company Logo:</label>
+                                <label asp-for="companyImgURL" class="text-dark">Select Company Logo:</label>
                                 <input asp-for="companyImgURL" class="form-control" id="uploadBox" name="image" type="file"/>
                            
                      </div>
