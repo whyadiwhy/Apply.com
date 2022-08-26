@@ -31,7 +31,8 @@
         padding-left: 15px
     }
      .job-listing:is(:hover) {
-     background-color:#fbf7ff
+     background-color:#fbf7ff;
+     transform: scale(1.05)
      }
 
     .job-listing {
@@ -74,6 +75,15 @@
         transform: scale(1.05);
         background-color:#fbf7ff;
     }
+    #my {
+  font-size: clamp(1rem, 3vw + 1rem, 4rem);
+  position: relative;
+  font-family: "Source Code Pro", monospace;
+  position: relative;
+  width: max-content;
+}
+
+
    
 </style>
 <section style="margin-top:-65px;">
@@ -96,11 +106,21 @@
           <div class="col-md-6 ml-auto align-self-center">
             <div class="intro">
               <div class="heading">
-                <h2 class="text-black font-weight-bold">Need <br />Job?</h2>
+                <h2 class="text-black font-weight-bold" style=" text-shadow: 1px 1px 1px #919191,
+      
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+   
+    1px 25px 25px rgba(16,16,16,0.2),
+    1px 30px 40px rgba(16,16,16,0.4)">Need <br />Job?</h2>
               </div>
               <div class="text sub-text">
                 <p>Finding the right job made easy with Apply.com. Register Now and Apply to the best jobs!.</p>
-                <p><a href="#" target="_blank" class="btn btn-primary btn-md btn-pill">Contact Us</a></p>
+                <p><a asp-controller="Contact" asp-action="Create" target="_blank" class="btn btn-primary btn-md btn-pill">Contact Us</a></p>
               </div>
             </div>
           </div>
@@ -195,7 +215,7 @@
 </section>
 <section>
     <div class="container">
-        <h4 class="heading text-light">Trending this month</h4>
+        <h4 class="heading text-dark">Trending this month</h4>
         @foreach (var trending in Model.Trendings)
         {
             <div class="job-listing job-listing--last" >
@@ -236,6 +256,10 @@
             </div>
         }
     </div>
+
+   
+
+
     <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -333,8 +357,23 @@
     </div>
   </div>
 </div>
+<div>
+<h1 style="text-align: center; margin-top:50px;">Must Watch Videos</h1>
+ <div class="container" style="display:flex;margin-top:30px;" >
+     
+        <div id="ab1" style="display:inline-block; margin-left:55px;" >
+                <iframe width="460" height="315" src="https://www.youtube.com/embed/8phKQTuEl7Y" title="YouTube video player" ></iframe>
+        </div>
+        <div id="ab2" style="display:inline-block; padding-left:50px;">
+                <iframe width="460" height="315" src="https://www.youtube.com/embed/or3pw1VTF98" title="YouTube video player" ></iframe>
+
+        </div>
+
+ </div>
+</div>
    
 </section>
+
 
 
  <script src="~/js/bootstrap.min.js"></script>
